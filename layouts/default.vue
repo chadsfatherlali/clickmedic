@@ -28,3 +28,11 @@
     </v-content>
   </v-app>
 </template>
+
+<style>
+@media (min-width: 1904px) {
+  .container {
+    max-width: 1185px;
+  }
+}
+</style>
