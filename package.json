@@ -14,10 +14,15 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
+    "@types/dinero.js": "^1.6.2",
     "cross-env": "^5.2.0",
+    "dinero.js": "^1.8.1",
     "express": "^4.16.4",
+    "firebase-admin": "8.2.0",
+    "flamelink": "1.0.0-alpha.19",
     "nuxt": "^2.0.0",
-    "vue-property-decorator": "^8.4.1"
+    "vue-property-decorator": "^8.4.1",
+    "vuex-module-decorators": "^0.16.1"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",

@@ -30,6 +30,13 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    {
+      src: '~/plugins/firebase.ts',
+      mode: 'server'
+    },
+    {
+      src: '~/plugins/dinero.ts'
+    }
   ],
   /*
   ** Nuxt.js dev-modules
