@@ -35,14 +35,14 @@
           lazy-validation
         >
           <v-text-field
-            v-model="formLogin.email"
+            v-model="formRegister.email"
             label="E-mail"
             required
             outlined
             prepend-inner-icon="mdi-email"
           />
           <v-text-field
-            v-model="formLogin.password"
+            v-model="formRegister.password"
             label="Contraseña"
             type="password"
             required
@@ -50,21 +50,21 @@
             prepend-inner-icon="mdi-onepassword"
           />
           <v-text-field
-            v-model="formLogin.name"
+            v-model="formRegister.name"
             label="Nombres"
             required
             outlined
             prepend-inner-icon="mdi-account"
           />
           <v-text-field
-            v-model="formLogin.surname"
+            v-model="formRegister.surname"
             label="Apellidos"
             required
             outlined
             prepend-inner-icon="mdi-account"
           />
           <v-text-field
-            v-model="formLogin.phone"
+            v-model="formRegister.phone"
             label="Teléfono"
             required
             outlined
@@ -98,7 +98,7 @@ export default class LoginPage extends Vue {
     sex: ''
   }
   clean (form:any) {
-   this.$refs[form].reset()
+    (this.$refs[form] as Vue & { reset: () => {} }).reset()
   }
   login () {
     console.log(this.formLogin)

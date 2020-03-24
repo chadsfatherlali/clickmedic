@@ -9,8 +9,8 @@ if (process.server) {
   const serviceAccount = require('./../clickmedic-ecuador-firebase-adminsdk-zhioe-76f56a22cf.json')
   const firebaseConfig = {
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://content-support-pages.firebaseio.com',
-    storageBucket: 'content-support-pages.appspot.com'
+    databaseURL: 'https://clickmedic-ecuador.firebaseio.com',
+    storageBucket: 'clickmedic-ecuador.appspot.com'
   }
 
   firebaseApp = admin.initializeApp(firebaseConfig, Date.now().toString())
@@ -35,4 +35,3 @@ const flamelinkPlugin: Plugin = (context) => {
 }
 
 export default flamelinkPlugin
-
