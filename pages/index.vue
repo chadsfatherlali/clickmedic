@@ -27,5 +27,5 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
   layout: 'underConstruction'
 })
 
-export default class HomaPage extends Vue {}
+export default class HomePage extends Vue {}
 </script>

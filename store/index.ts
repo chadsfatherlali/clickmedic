@@ -26,11 +26,11 @@ export const mutations: MutationTree<RootState> = {
     const menu:any = [
       {
         text: 'Sobre Nosotros',
-        link: '/sobre-nosotros'
+        link: '/sobre-nosotros',
       },
       {
         text: 'Contacto',
-        link: '/contacto'
+        link: '/contacto',
       }
     ]
 

@@ -109,7 +109,7 @@ import { Vue, Component } from 'vue-property-decorator'
   }
 })
 
-export default class HomaPage extends Vue {}
+export default class OdontologiaPage extends Vue {}
 </script>
 
 <style>
