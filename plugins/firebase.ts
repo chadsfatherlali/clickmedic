@@ -1,8 +1,8 @@
 import flamelink from 'flamelink'
 import { Plugin } from '@nuxt/types'
 
-let firebaseApp
-let flamelinkInstance: any
+let firebaseApp:any
+let flamelinkInstance:any
 
 if (process.server) {
   const admin = require('firebase-admin')
@@ -27,11 +27,13 @@ if (process.server) {
 declare module '@nuxt/types' {
   interface Context {
     $flamelink(message: string): void
+    $firebaseSer(message: string): void
   }
 }
 
-const flamelinkPlugin: Plugin = (context) => {
+const flamelinkPlugin:Plugin = (context) => {
   context.$flamelink = flamelinkInstance
+  context.$firebaseSer = firebaseApp
 }
 
 export default flamelinkPlugin

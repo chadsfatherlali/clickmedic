@@ -11,6 +11,7 @@
         <v-btn v-for="(item, key) in $store.state.menu" :key="key" text>
           {{ item.text }}
         </v-btn>
+        <UserStatus />
       </v-toolbar-items>
       <v-menu offset-y>
         <template  v-slot:activator="{on}">
@@ -20,6 +21,9 @@
           <v-list-item v-for="(item, key) in $store.state.menu" :key="key">
             <v-list-item-title>{{ item.text }}</v-list-item-title>
           </v-list-item>
+          <v-list-item>
+            <UserStatus :mobile="true" />
+          </v-list-item>
         </v-list>
       </v-menu>
     </v-app-bar>
@@ -28,6 +32,18 @@
     </v-content>
   </v-app>
 </template>
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+import UserStatus from '../components/UserStatus.vue'
+
+@Component ({
+  components: {
+    UserStatus
+  }
+})
+export default class LoginPage extends Vue {}
+</script>
 
 <style>
 @media (min-width: 1904px) {

@@ -36,6 +36,9 @@ module.exports = {
     },
     {
       src: '~/plugins/dinero.ts'
+    },
+    {
+      src: '~/plugins/firebase-cli.ts'
     }
   ],
   /*

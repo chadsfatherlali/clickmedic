@@ -70,6 +70,12 @@
             outlined
             prepend-inner-icon="mdi-phone"
           />
+          <v-select
+            v-model="formRegister.sex"
+            :items="sexItems"
+            label="Género"
+            outlined
+          />
           <v-btn color="primary" rounded @click="signup">Registrarse</v-btn>
           <v-btn color="warning" rounded @click="clean('formRegister')">Limpiar</v-btn>
         </v-form>
@@ -84,7 +90,12 @@ import { Vue, Component } from 'vue-property-decorator'
 
 @Component
 export default class LoginPage extends Vue {
+  $firebase:any = this['$firebase']
   valid:boolean = true
+  sexItems:any = [
+    'Mujer',
+    'Hombre'
+  ]
   formLogin:any = {
     email: '',
     password: ''
@@ -98,13 +109,25 @@ export default class LoginPage extends Vue {
     sex: ''
   }
   clean (form:any) {
-    (this.$refs[form] as Vue & { reset: () => {} }).reset()
+    const _form = this.$refs[form] as any
+    
+    _form.reset()
   }
   login () {
-    console.log(this.formLogin)
+    const result = this.$firebase.auth().signInWithEmailAndPassword(this.formLogin.email, this.formLogin.password)
   }
-  signup () {
-    console.log(this.formRegister)
+  async signup () {
+    const { user } = await this.$firebase.auth().createUserWithEmailAndPassword(this.formRegister.email, this.formRegister.password)
+    
+    if (user) {
+      const result = await this.$firebase.firestore().collection('userInfo').add({
+        uid: user.uid,
+        name: this.formRegister.name,
+        surname: this.formRegister.surname,
+        phone: this.formRegister.phone,
+        sex: this.formRegister.sex
+      })
+    }
   }
 }
 </script>
