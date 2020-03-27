@@ -3,7 +3,7 @@
     <v-icon>mdi-logout</v-icon>&nbsp;
     {{ $store.state.user.email }}
   </v-list-item-title>
-  <v-list-item-title v-else-if="mobile && !$store.state.user">
+  <v-list-item-title v-else-if="mobile && !$store.state.user" @click="goToLogin">
     <v-icon>mdi-login</v-icon>&nbsp;
     Login
   </v-list-item-title>
@@ -24,9 +24,15 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 export default class UserStatus extends Vue {
   @Prop({ type: Boolean }) readonly mobile!:boolean
 
+  $store:any = this['$store'] 
   $firebase:any = this['$firebase']
   user:any = null
   
+  goToLogin () {
+    this['$router'].push({
+      path: '/login'
+    })
+  }
   logout () {
     this.$firebase.auth().signOut()
   }
