@@ -13,9 +13,9 @@ export const actions: ActionTree<RootState, RootState> = {
   async nuxtServerInit ({ commit }) {
     commit('setMenu')
   },
-  async setProducts ({ commit }, flamelink) {
-    const data = await flamelink.content.get({
-      schemaKey: 'productosOdontoclick',
+  async setProducts ({ commit }, object) {
+    const data = await object.db.content.get({
+      schemaKey: object.schemaKey,
       populate: true
     })
 

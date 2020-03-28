@@ -8,12 +8,14 @@ declare module 'vue/types/vue' {
 }
 
 Vue.prototype.$dinero = (amount:any) => {
-  const _amount:number = parseFloat(amount) * 100
+  if (!isNaN(amount)) {
+    const _amount:number = Math.round(parseFloat(amount) * 100)
 
-  return dinero({
-    amount: _amount,
-    currency: 'USD',
-    precision: 2
-  })
-    .toFormat()
+    return dinero({
+      amount: _amount,
+      currency: 'USD',
+      precision: 2
+    })
+      .toFormat()
+  }
 }

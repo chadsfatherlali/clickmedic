@@ -71,6 +71,7 @@
               <v-btn
                 color="blue"
                 text
+                @click="addProduct(item)"
               >
                 Añadir producto
               </v-btn>
@@ -79,16 +80,106 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-dialog
+      v-model="dialog"
+      max-width="374"
+    >
+      <v-card
+        v-if="!checkProductIsEmpty(product)"
+      >
+        <v-img
+          height="250"
+          :src="product.imagenProducto[0].url"
+        />
+        <v-card-title
+          style="margin-bottom: 1em;"
+          class="headline grey lighten-2"
+          primary-title
+        >
+          {{ product.producto }}
+        </v-card-title>
+        <v-card-text>
+          <!-- <pre>{{ product }}</pre> -->
+          <v-form ref="cartForm">
+            <v-select
+              v-model="product.city"
+              :items="product.ciudades"
+              label="Elija la ciudad"
+              outlined
+            />
+            <v-slider
+              v-model="product.quantity"
+              label="Cantidad"
+              max="10"
+              min="1"
+              step="1"
+              ticks="always"
+            >
+              <template v-slot:append>
+                <v-text-field
+                  v-model="product.quantity"
+                  hide-details
+                  single-line
+                  type="number"
+                  style="width: 40px"
+                />
+              </template>
+            </v-slider>
+            <v-btn
+              style="margin-top: 2em;"
+              block
+              color="primary"
+              @click="sendToCart({
+                owner: $store.state.user.uid,
+                id: product.id,
+                product: product.producto,
+                quantity: product.quantity,
+                city: product.city,
+                price: product.quantity * product.precioOdontoClick
+              })"
+            >
+              Añadir a carrito ({{ $dinero(product.quantity * product.precioOdontoClick) }})
+            </v-btn>
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            text
+            @click="dialog = false"
+          >
+            Cerrar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+     <v-btn
+     v-if="$store.state.user"
+      color="primary"
+      dark
+      large
+      fixed
+      bottom
+      right
+      fab
+    >
+      <Badge /> 
+    </v-btn>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import Badge from '../../components/Badge.vue'
+import _isEmpty from 'lodash/isEmpty'
 
 @Component ({
   async asyncData ({ app, store }) {
     try {
-      await store.dispatch('setProducts', app.context.$flamelink)
+      await store.dispatch('setProducts', {
+        db: app.context.$flamelink,
+        schemaKey: 'productosOdontoclick'
+      })
     } catch (err) {
       console.log(err)
     }
@@ -106,10 +197,50 @@ import { Vue, Component } from 'vue-property-decorator'
         },
       ]
     }
+  },
+  components: {
+    Badge
   }
 })
 
-export default class OdontologiaPage extends Vue {}
+export default class OdontologiaPage extends Vue {
+  $firebase:any = this['$firebase']
+  $store:any = this['$store']
+  dialog:boolean = false
+  product:any = {}
+  productForm:any = {
+    quantity: 1,
+    city: ''
+  }
+
+  async sendToCart (product:any) {
+    this.$firebase.firestore().collection('cart').add(product)
+      .then((res:any) => {
+        const _form = this.$refs['cartForm'] as any
+    
+        _form.reset()
+        
+        this.dialog = false
+      })
+      .catch((err:any) => {
+        console.log(err)
+      })
+  }
+  checkProductIsEmpty (product:any) {
+    return _isEmpty(product)
+  }
+  addProduct (product:any) {
+    if (this['$store'].state.user) {
+      this.product = product
+      this.dialog = true
+    } else {
+      this['$router'].push({
+        path: '/login',
+         query: { redirect: this['$route'].path } 
+      })
+    }
+  }
+}
 </script>
 
 <style>

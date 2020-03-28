@@ -114,7 +114,12 @@ export default class LoginPage extends Vue {
     _form.reset()
   }
   login () {
-    const result = this.$firebase.auth().signInWithEmailAndPassword(this.formLogin.email, this.formLogin.password)
+    const { code, message } = this.$firebase.auth().signInWithEmailAndPassword(this.formLogin.email, this.formLogin.password)
+    const urlRedirect:string = (this['$route'].query.redirect || '') as string
+
+    if (!code && !message) {
+      window.top.location.href = urlRedirect
+    }
   }
   async signup () {
     const { user } = await this.$firebase.auth().createUserWithEmailAndPassword(this.formRegister.email, this.formRegister.password)
