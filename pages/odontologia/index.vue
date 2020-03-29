@@ -154,7 +154,8 @@
       </v-card>
     </v-dialog>
      <v-btn
-     v-if="$store.state.user"
+      v-if="$store.state.user"
+      :href="`/cart/${$store.state.user.uid}`"
       color="primary"
       dark
       large
@@ -174,7 +175,7 @@ import Badge from '../../components/Badge.vue'
 import _isEmpty from 'lodash/isEmpty'
 
 @Component ({
-  async asyncData ({ app, store }) {
+  async asyncData ({ app, store}) {
     try {
       await store.dispatch('setProducts', {
         db: app.context.$flamelink,

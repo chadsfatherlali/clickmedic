@@ -4,6 +4,7 @@ export const strict = false
 export const state = () => ({
   menu: [],
   products: [],
+  cartItems: [],
   user: null
 })
 
@@ -25,6 +26,9 @@ export const actions: ActionTree<RootState, RootState> = {
 export const mutations: MutationTree<RootState> = {
   setUser: (state, user) => {
     state.user = user
+  },
+  setCartItems: (state, items) => {
+    state.cartItems = items
   },
   setMenu: (state) => {
     const menu:any = [
