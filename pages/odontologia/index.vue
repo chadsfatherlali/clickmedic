@@ -50,7 +50,7 @@
               <p>
                 <v-chip color="green" outlined>
                   <v-icon left>mdi-currency-usd-circle</v-icon>
-                  Oferta Odonto click {{ $dinero(item.precioOdontoClick) }}
+                  Oferta Odonto click {{ $dinero(item.precioOferta) }}
                 </v-chip>
               </p>
               <p>
@@ -135,10 +135,10 @@
                 product: product.producto,
                 quantity: product.quantity,
                 city: product.city,
-                price: product.quantity * product.precioOdontoClick
+                price: product.quantity * product.precioOferta
               })"
             >
-              Añadir a carrito ({{ $dinero(product.quantity * product.precioOdontoClick) }})
+              Añadir a carrito ({{ $dinero(product.quantity * product.precioOferta) }})
             </v-btn>
           </v-form>
         </v-card-text>
@@ -153,19 +153,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-     <v-btn
-      v-if="$store.state.user"
-      :href="`/cart/${$store.state.user.uid}`"
-      color="primary"
-      dark
-      large
-      fixed
-      bottom
-      right
-      fab
-    >
-      <Badge /> 
-    </v-btn>
+    <Badge /> 
   </div>
 </template>
 
@@ -209,30 +197,58 @@ export default class OdontologiaPage extends Vue {
   $store:any = this['$store']
   dialog:boolean = false
   product:any = {}
-  productForm:any = {
-    quantity: 1,
-    city: ''
-  }
+  existProduct:any = {}
 
   async sendToCart (product:any) {
-    this.$firebase.firestore().collection('cart').add(product)
-      .then((res:any) => {
-        const _form = this.$refs['cartForm'] as any
-    
-        _form.reset()
-        
-        this.dialog = false
+    if (!_isEmpty(this.existProduct)) {
+      this.$firebase.firestore().collection('cart').doc(this.existProduct.fsId).update({
+        price: product.price,
+        quantity: product.quantity,
+        city: product.city
       })
-      .catch((err:any) => {
-        console.log(err)
-      })
+        .then((res:any) => {
+          const _form = this.$refs['cartForm'] as any
+      
+          _form.reset()
+          
+          this.dialog = false
+        })
+        .catch((err:any) => {
+          console.log(err)
+        })
+    } else {
+      this.$firebase.firestore().collection('cart').add(product)
+        .then((res:any) => {
+          const _form = this.$refs['cartForm'] as any
+      
+          _form.reset()
+          
+          this.dialog = false
+        })
+        .catch((err:any) => {
+          console.log(err)
+        })
+    }
   }
   checkProductIsEmpty (product:any) {
     return _isEmpty(product)
   }
-  addProduct (product:any) {
+  async addProduct (product:any) {
     if (this['$store'].state.user) {
       this.product = product
+
+      const existProductOnCart:any = await this.$firebase.firestore().collection('cart').where('id' , '==', product.id).where('owner', '==', this.$store.state.user.uid).get()
+
+      if (existProductOnCart.size > 0) {
+        let _product = existProductOnCart.docs[0].data()
+
+        _product.fsId = existProductOnCart.docs[0].id
+
+        this.existProduct = _product 
+        this.product.city = _product.city
+        this.product.quantity = _product.quantity
+      }
+
       this.dialog = true
     } else {
       this['$router'].push({

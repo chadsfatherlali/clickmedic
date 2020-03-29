@@ -53,9 +53,9 @@ import _each from 'lodash/each'
 import _reduce from 'lodash/reduce'
 
 declare global {
-    interface Window {
-        KushkiCheckout:any
-    }
+  interface Window {
+    KushkiCheckout:any
+  }
 }
 
 @Component ({
