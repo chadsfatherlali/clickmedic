@@ -5,15 +5,15 @@
   </v-list-item-title>
   <v-list-item-title v-else-if="mobile && !$store.state.user" @click="goToLogin">
     <v-icon>mdi-login</v-icon>&nbsp;
-    Login
+    Entrar
   </v-list-item-title>
   <v-btn color="error" v-else-if="$store.state.user" @click="logout">
     <v-icon>mdi-logout</v-icon>&nbsp;
-    Logout {{ $store.state.user.email }}
+    Salir {{ $store.state.user.email }}
   </v-btn>
   <v-btn color="primary" v-else href="/login">
     <v-icon>mdi-login</v-icon>&nbsp;
-    Login
+    Entrar
   </v-btn>
 </template>
 

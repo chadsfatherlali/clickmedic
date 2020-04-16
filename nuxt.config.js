@@ -42,6 +42,9 @@ module.exports = {
     },
     {
       src: '~/plugins/firebase-cli.ts'
+    },
+    {
+      src: '~/plugins/productsAndServices.ts'
     }
   ],
   /*

@@ -69,10 +69,11 @@
             </v-card-text>
             <v-card-actions>
               <v-btn
-                color="blue"
-                text
+                color="primary"
                 @click="addProduct(item)"
+                rounded
               >
+                <v-icon>mdi-plus</v-icon>&nbsp;
                 Añadir producto
               </v-btn>
             </v-card-actions>
@@ -99,7 +100,6 @@
           {{ product.producto }}
         </v-card-title>
         <v-card-text>
-          <!-- <pre>{{ product }}</pre> -->
           <v-form ref="cartForm">
             <v-select
               v-model="product.city"
@@ -135,10 +135,12 @@
                 product: product.producto,
                 quantity: product.quantity,
                 city: product.city,
-                price: product.quantity * product.precioOferta
+                price: product.quantity * product.precioOferta,
+                image: product.imagenProducto[0].url
               })"
             >
-              Añadir a carrito ({{ $dinero(product.quantity * product.precioOferta) }})
+              Añadir a carrito
+              <v-icon>mdi-cart-plus</v-icon>
             </v-btn>
           </v-form>
         </v-card-text>
@@ -200,6 +202,8 @@ export default class OdontologiaPage extends Vue {
   existProduct:any = {}
 
   async sendToCart (product:any) {
+    console.log(product)
+
     if (!_isEmpty(this.existProduct)) {
       this.$firebase.firestore().collection('cart').doc(this.existProduct.fsId).update({
         price: product.price,
@@ -244,7 +248,7 @@ export default class OdontologiaPage extends Vue {
 
         _product.fsId = existProductOnCart.docs[0].id
 
-        this.existProduct = _product 
+        this.existProduct = _product
         this.product.city = _product.city
         this.product.quantity = _product.quantity
       }

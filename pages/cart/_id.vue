@@ -25,7 +25,7 @@
                 size="80"
                 color="grey"
               >
-                <img style="object-fit: cover;" src="https://storage.googleapis.com/clickmedic-ecuador.appspot.com/flamelink/media/Blanqueamiento%20OdontoClick.jpg?GoogleAccessId=firebase-adminsdk-zhioe%40clickmedic-ecuador.iam.gserviceaccount.com&Expires=16725225600&Signature=ELQdNhY4DsBAHkcd1uISWz6dTCnV00IVypvKKI8H0%2FCrwMyEHxwa744yyU0lGZQnzgrC68Iz5czBHBatrnL5EstZ3D8rJQ1Io%2B1VpkUdy1tVPAU%2F7sK7t8F4%2Fw8kBzn053KQGIbQ6RQOfC4mLY6lRK7RpsdpEukN21FebE4lCOiq%2BWvLRtbfolSHnseY7cCFTJcNqAlb2SXfz9MZvUivGk8o8euAuWs19UusnlAL9p1iHNG1Q4%2BZ4Yhv3VHTRQoZxmr1JwOYltfY1Bzxwa02UJx0N7VwIaF8i0OQoKgDUOyDpK%2BXAgH6P9OsAzdp%2B5jlqZZxuzgQbrfrPqOLCbkFtA%3D%3D">
+                <img style="object-fit: cover;" :src="product.image">
               </v-list-item-avatar>
             </v-list-item>
             <v-card-actions>
