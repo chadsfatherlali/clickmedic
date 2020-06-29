@@ -22,7 +22,7 @@ Vue.prototype.$productsAndServices = {
     },
     {
       title: 'Productos Médicos',
-      link: '/productos-médicos',
+      link: '/productos-medicos',
       image: 'https://firebasestorage.googleapis.com/v0/b/clickmedic-ecuador.appspot.com/o/flamelink%2Fmedia%2Ftablet-4842049_1280.jpg?alt=media&token=0096907d-2804-4b1a-b551-885b44b5f083'
     }
   ]

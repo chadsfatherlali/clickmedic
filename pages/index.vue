@@ -70,7 +70,9 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component({
-  async asyncData () {
+  async asyncData ({ redirect }) {
+    redirect(302, '/sitio-bajo-construccion')
+
     return {
       items: [
         {

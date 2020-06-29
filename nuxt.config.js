@@ -59,7 +59,12 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    ['@nuxtjs/redirect-module', {
+      from: '^/$',
+      to: '/sitio-bajo-construccion',
+      statusCode: 302
+    }]
   ],
   /*
   ** Axios module configuration
