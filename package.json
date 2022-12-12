@@ -20,7 +20,7 @@
     "core-js": "^2.6.5",
     "cross-env": "^5.2.0",
     "dinero.js": "^1.8.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "firebase": "^6.2.0",
     "firebase-admin": "^8.10.0",
     "flamelink": "^1.0.0-alpha.19",
